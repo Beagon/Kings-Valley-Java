@@ -10,6 +10,7 @@ import com.Orion.kingsvalley.brick.Brick;
 import com.Orion.kingsvalley.brick.IBuildingBlock;
 import com.Orion.kingsvalley.explorer.Explorer;
 import com.Orion.kingsvalley.explorer.ExplorerManager;
+import com.Orion.kingsvalley.floor.Floor;
 import com.Orion.kingsvalley.gesturelistener.ExplorerGestureListener;
 import com.Orion.kingsvalley.inputprocessor.ExplorerInputProcessor;
 import com.Orion.kingsvalley.stairsLeft.StairsLeft;
@@ -33,6 +34,7 @@ public class Level {
     private Explorer explorer;
     private ArrayList<StairsRight> stairsRight;
     private ArrayList<StairsLeft> stairsLeft;
+    private ArrayList<Floor> floors;
     private ExplorerInputProcessor input;
     private ExplorerGestureListener gesture;
     private InputMultiplexer multiplexer;
@@ -55,8 +57,10 @@ public class Level {
         this.LoadAssets();
         this.stairsRight = new ArrayList<StairsRight>();
         this.stairsLeft = new ArrayList<StairsLeft>();
+        this.floors = new ArrayList<Floor>();
         this.DetectStairsRight();
         this.DetectStairsLeft();
+        this.DetectFloors();
         this.input = new ExplorerInputProcessor(this);
         this.gesture = new ExplorerGestureListener(this);
         this.multiplexer = new InputMultiplexer();
@@ -139,7 +143,12 @@ public class Level {
 			 else 
 			 {
 					 if (amountOfBricks > 0){
+						 this.floors.add(new Floor(this.game, position, amountOfBricks,
+								 		 this.bricks[j-1][i].getCharacter(), 
+								 		 this.bricks[j-amountOfBricks][i].getCharacter()));
 						 
+						 amountOfBricks = 0;
+						 position = Vector2.Zero;
 					 }
 			 	}
 			 }
@@ -222,7 +231,13 @@ public class Level {
         {
             stair.Draw(delta);
         }
-       
+        
+	
+	//		for (Floor floor : this.floors) {
+	//			floor.Draw(delta);
+	//		}
+
+        
         if (this.explorer != null)
             this.explorer.Draw(delta);
     }

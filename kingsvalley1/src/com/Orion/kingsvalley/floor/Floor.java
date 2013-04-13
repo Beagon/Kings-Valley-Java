@@ -45,7 +45,7 @@ public class Floor {
 	{ 
 		//Used to draw and debug
 		for (int i = 0; i < this.amountOfBricks; i++){
-			this.floor.add(new Brick(this.game, this.position, "floorTexture16x16.png", 'F'));
+			this.floor.add(new Brick(this.game, new Vector2(this.position.x  + i * 16f, this.position.y), "floorTexture16x16.png", 'F'));
 		}
 		this.collisionRectangle = new Rectangle(this.position.x, this.position.y, this.amountOfBricks * 16f, 16f);
 		
