@@ -1,6 +1,6 @@
 package com.adruijter.kingsvalley1.client;
 
-import com.Orion.kingsvalley.KingsValley;
+import com.adruijter.kingsvalley1.KingsValley1;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
@@ -14,6 +14,6 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
-		return new KingsValley();
+		return new KingsValley1();
 	}
 }

@@ -1,6 +1,4 @@
-*.class
+kingsvalley1/bin/*
+kingsvalley1-android/bin/*
+*/bin/*
 
-# Package Files #
-*.jar
-*.war
-*.ear
