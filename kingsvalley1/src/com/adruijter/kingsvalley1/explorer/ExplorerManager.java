@@ -280,4 +280,19 @@ public class ExplorerManager
     	return false;
     }
     
+    public static boolean CollisionDetectionJumpRight() //Detects the collision in a (right) jump
+    {
+    	for (Floor floor : floors)
+    	{
+    		if (explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+    		{
+    			float inWall = floor.getCollisionRectangle().x - (explorer.getCollisionRectJumpRight().x + explorer.getCollisionRectJumpRight().getWidth()); //Calculate the pixels
+    			explorer.setPixelsInWallRight(inWall);
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
 }

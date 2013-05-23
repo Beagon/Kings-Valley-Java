@@ -10,6 +10,7 @@ public class ExplorerJumpRight extends AnimatedSprite
     private Explorer explorer;
     private float startX, startY, a;
     private int startH, startK, h, k;
+    private float collisionRectJumpRightStartY;
 
 
     //Constructor
@@ -29,6 +30,7 @@ public class ExplorerJumpRight extends AnimatedSprite
         this.h = (int)(this.startX + this.startH);
         this.k = (int)(this.startY - this.startK);
         this.a = this.CalculateA();
+        this.collisionRectJumpRightStartY = this.explorer.getCollisionRectJumpRight().y;
     }
 
     private float CalculateA()
@@ -41,6 +43,16 @@ public class ExplorerJumpRight extends AnimatedSprite
         float x = this.explorer.getPosition().x + this.explorer.getSpeed();
         float y = (float)(this.a * Math.pow((x - this.h), 2d) + this.k); 
         this.explorer.setPosition(new Vector2(x,y));
+        
+        if (x <= this.h)
+        {
+        	this.explorer.getCollisionRectJumpRight().setY(this.collisionRectJumpRightStartY);
+        }
+        else if(x > this.h)
+        {
+        	this.explorer.getCollisionRectJumpRight().setY(this.collisionRectJumpRightStartY + 15);
+        }
+        
         if (ExplorerManager.CollisionDetectionGroundAfterJump())
         {
             this.explorer.setPosition(new Vector2(x,
@@ -51,7 +63,12 @@ public class ExplorerJumpRight extends AnimatedSprite
            	else
            	this.explorer.setState(this.explorer.getIdleRight());
         }
-        //base.Update(gameTime);
+  
+        if(ExplorerManager.CollisionDetectionJumpRight()){
+        	this.explorer.setPosition(this.explorer.getPosition().add(this.explorer.getPixelsInWallRight(), 0f));
+        	this.explorer.getIdleFallAfterJump().Initialize();
+        	this.explorer.setState(this.explorer.getIdleFallAfterJump());
+        }
     }
 
     public void Draw(float delta)

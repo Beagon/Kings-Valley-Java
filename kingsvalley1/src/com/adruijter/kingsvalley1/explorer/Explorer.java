@@ -41,7 +41,8 @@ public class Explorer
 	private ExplorerFallOfFloorRight fallOfFloorRight;
 	private ExplorerIdleRightNoLineairMovement idleRightNoLineairMovement;
 	private ExplorerIdleLeftNoLineairMovement idleLeftNoLineairMovement;
-	private Rectangle collisionRectStairs;
+	private ExplorerIdleFallAfterJump idleFallAfterJump;
+	private Rectangle collisionRectStairs, collisionRectJumpRight;
 	private Texture collisionText;
 	
 	
@@ -55,6 +56,8 @@ public class Explorer
 		this.position = position;
 		this.collisionRectStairs.x = this.position.x;
 		this.collisionRectStairs.y = this.position.y + 16;
+		this.collisionRectJumpRight.x = this.position.x + 18;
+		this.collisionRectJumpRight.y = this.position.y - 2;
 	}
 	public float getSpeed()
 	{
@@ -142,6 +145,12 @@ public class Explorer
 	public void setCollisionText(Texture collisionText) {
 		this.collisionText = collisionText;
 	}
+	public Rectangle getCollisionRectJumpRight() {
+		return collisionRectJumpRight;
+	}
+	public void setCollisionRectJumpRight(Rectangle collisionRectJumpRight) {
+		this.collisionRectJumpRight = collisionRectJumpRight;
+	}
 	public ExplorerWalkUpStairsRight getWalkUpStairsRight() {
 		return walkUpStairsRight;
 	}
@@ -180,6 +189,12 @@ public class Explorer
 	}
 	public ExplorerIdleDownStairsLeft getIdleDownStairsLeft() {
 		return idleDownStairsLeft;
+	}
+	public ExplorerIdleFallAfterJump getIdleFallAfterJump() {
+		return idleFallAfterJump;
+	}
+	public void setIdleFallAfterJump(ExplorerIdleFallAfterJump idleFallAfterJump) {
+		this.idleFallAfterJump = idleFallAfterJump;
 	}
 	public void setIdleDownStairsLeft(ExplorerIdleDownStairsLeft idleDownStairsLeft) {
 		this.idleDownStairsLeft = idleDownStairsLeft;
@@ -242,6 +257,7 @@ public class Explorer
 		this.game = game;
 		this.position = position;
 		this.collisionRectStairs = new Rectangle(this.position.x, this.position.y + 16, 16, 17);
+		this.setCollisionRectJumpRight(new Rectangle(this.position.x + 18f, this.position.y - 2f, 2f, 1f));
 		this.speed = speed;	
 		this.texture = new Texture("data/Explorer/explorer.png");
 		this.collisionText = new Texture("data/Explorer/collision_text.png");
@@ -265,6 +281,7 @@ public class Explorer
 		this.fallOfFloorRight = new ExplorerFallOfFloorRight(this, 1, 1);
 		this.idleRightNoLineairMovement = new ExplorerIdleRightNoLineairMovement(this);
 		this.idleLeftNoLineairMovement = new ExplorerIdleLeftNoLineairMovement(this);
+		this.idleFallAfterJump = new ExplorerIdleFallAfterJump(this);
 		this.state = this.idleRight;
 	}
 	
