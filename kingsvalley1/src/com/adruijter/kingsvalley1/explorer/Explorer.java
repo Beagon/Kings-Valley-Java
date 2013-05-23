@@ -18,6 +18,7 @@ public class Explorer
 	private float speed;
 	private float pixelsThroughFloor;
 	private float pixelsInWallRight;
+	private float pixelsInWallLeft;
 	private Texture texture;
 	private AnimatedSprite state;
 	private ExplorerWalkRight walkRight;
@@ -38,6 +39,8 @@ public class Explorer
 	private ExplorerWalkDownStairsLeft walkDownStairsLeft;
 	private ExplorerFallOfFloorLeft fallOfFloorLeft;
 	private ExplorerFallOfFloorRight fallOfFloorRight;
+	private ExplorerIdleRightNoLineairMovement idleRightNoLineairMovement;
+	private ExplorerIdleLeftNoLineairMovement idleLeftNoLineairMovement;
 	private Rectangle collisionRectStairs;
 	private Texture collisionText;
 	
@@ -213,6 +216,26 @@ public class Explorer
 		this.pixelsInWallRight = pixelsInWallRight;
 	}
 	
+	public float getPixelsInWallLeft() {
+		return pixelsInWallLeft;
+	}
+	public void setPixelsInWallLeft(float pixelsInWallLeft) {
+		this.pixelsInWallLeft = pixelsInWallLeft;
+	}
+	public ExplorerIdleRightNoLineairMovement getIdleRightNoLineairMovement() {
+		return idleRightNoLineairMovement;
+	}
+	public void setIdleRightNoLineairMovement(ExplorerIdleRightNoLineairMovement idleRightNoLineairMovement) {
+		this.idleRightNoLineairMovement = idleRightNoLineairMovement;
+	}
+	
+	public ExplorerIdleLeftNoLineairMovement getIdleLeftNoLineairMovement() {
+		return idleLeftNoLineairMovement;
+	}
+	public void setIdleLeftNoLineairMovement(ExplorerIdleLeftNoLineairMovement idleLeftNoLineairMovement) {
+		this.idleLeftNoLineairMovement = idleLeftNoLineairMovement;
+	}
+	
 	//Constructor
 	public Explorer(KingsValley1 game, Vector2 position, float speed)
 	{
@@ -240,6 +263,8 @@ public class Explorer
 		this.walkDownStairsLeft = new ExplorerWalkDownStairsLeft(this);
 		this.fallOfFloorLeft = new ExplorerFallOfFloorLeft(this, -1, 1);
 		this.fallOfFloorRight = new ExplorerFallOfFloorRight(this, 1, 1);
+		this.idleRightNoLineairMovement = new ExplorerIdleRightNoLineairMovement(this);
+		this.idleLeftNoLineairMovement = new ExplorerIdleLeftNoLineairMovement(this);
 		this.state = this.idleRight;
 	}
 	
@@ -268,4 +293,5 @@ public class Explorer
 		this.getGame().getBatch().setColor(1f, 1f, 1f, 1f);
 		this.state.Draw(delta);		
 	}
+
 }

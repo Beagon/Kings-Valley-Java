@@ -256,4 +256,28 @@ public class ExplorerManager
     	return false;
     }
     
+    
+    public static boolean CollisionDetectionWallInFrontLeft()
+    {
+    	//Loops trough floors to see if the collision rectangles of the explorer and a wall collide.
+    	for (Floor floor : floors)
+    	{
+    		if (explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+    		{    				
+    			if ((explorer.getPosition().x < floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth())){
+    				if((explorer.getPosition().x > floor.getCollisionRectangle().x)){
+    					if((explorer.getPosition().y + 2 * explorer.getCollisionRectStairs().getHeight()) > 
+    						(floor.getCollisionRectangle().y + floor.getCollisionRectangle().getHeight())){
+    						float inWall = ((floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth()) - explorer.getCollisionRectStairs().x);
+    						explorer.setPixelsInWallLeft(inWall + 4);
+    						return true;
+    					}
+    				}
+    			
+				}
+    		}
+    	}
+    	return false;
+    }
+    
 }

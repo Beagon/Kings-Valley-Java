@@ -21,6 +21,11 @@ public class ExplorerWalkLeft extends AnimatedSprite{
 	
 	public void Update(float delta)
 	{
+		if (ExplorerManager.CollisionDetectionWallInFrontLeft()) //Detects if there is a wall in front of the explorer on the left side.
+		{
+			this.explorer.setPosition(this.explorer.getPosition().add(this.explorer.getPixelsInWallLeft(), 0f)); //Adds the pixels so we don't go trough the wall.
+			this.explorer.setState(explorer.getIdleLeftNoLineairMovement()); //Changes the state to Idle Left No Lineair Movement
+		}
 		this.explorer.setPosition(this.explorer.getPosition().
 				add(this.speed, 0f));
 		if ( !Gdx.input.isKeyPressed(Keys.LEFT) && !KingsValley1.IsAndroid())

@@ -63,7 +63,7 @@ public class Level {
     public Level(KingsValley1 game, int levelIndex) throws IOException 
 	{
 		this.game = game;
-		this.levelPath = String.format("data/%s.txt", levelIndex);
+		this.levelPath = "data/" + levelIndex + ".txt";
         this.LoadAssets();
         this.stairsRight = new ArrayList<StairsRight>();
         this.stairsLeft = new ArrayList<StairsLeft>();
@@ -129,20 +129,7 @@ public class Level {
 		this.region.put("trapTopRight02", new TextureRegion(this.spriteSheet,116, 16, 16, 16));
 		this.region.put("explorer", new TextureRegion(this.spriteSheet, 0, 36, 144, 32 ));
 		
-		/*
-		Set<Entry<String, TextureRegion>> t = this.region.entrySet();
-		Iterator<Entry<String, TextureRegion>> it = t.iterator();		
-		while ( it.hasNext())
-		{
-			Entry<String, TextureRegion> e = it.next();
-			TextureRegion value = (TextureRegion)e.getValue();
-			value.flip(false, true);			
-		}
-		
-		
-		http://docs.oracle.com/javase/tutorial/collections/interfaces/map.html
-		*/
-		
+				
 		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())
 		{
 			e.getValue().flip(false, true);

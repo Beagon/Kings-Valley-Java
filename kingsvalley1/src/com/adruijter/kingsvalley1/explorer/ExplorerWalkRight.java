@@ -25,7 +25,7 @@ public class ExplorerWalkRight extends AnimatedSprite{
 			Gdx.app.log("123", "gebotst met muur");
 			this.explorer.setPosition(this.explorer.getPosition().add(this.explorer.getPixelsInWallRight(), 0f));
 			//this.explorer.getIdleRight();
-			this.explorer.setState(explorer.getIdleRight());
+			this.explorer.setState(explorer.getIdleRightNoLineairMovement());
 		}
 		this.explorer.setPosition(this.explorer.getPosition().
 				add(this.speed, 0f));
