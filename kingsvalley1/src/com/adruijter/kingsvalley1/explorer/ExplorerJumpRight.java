@@ -47,14 +47,21 @@ public class ExplorerJumpRight extends AnimatedSprite
         if (x <= this.h)
         {
         	this.explorer.getCollisionRectJumpRight().setY(this.collisionRectJumpRightStartY);
+        	this.explorer.getCollisionRectStairs().setHeight(12f);
         }
         else if(x > this.h)
         {
         	this.explorer.getCollisionRectJumpRight().setY(this.collisionRectJumpRightStartY + 15);
+        	this.explorer.getCollisionRectStairs().setX(this.explorer.getPosition().x + 18);
+        	this.explorer.getCollisionRectStairs().setWidth(1f);       
+        	this.explorer.getCollisionRectStairs().setHeight(17f);
         }
         
         if (ExplorerManager.CollisionDetectionGroundAfterJump())
         {
+        	this.explorer.getCollisionRectStairs().setHeight(17f);      
+        	this.explorer.getCollisionRectStairs().setWidth(20f);
+        	
             this.explorer.setPosition(new Vector2(x,
             									  this.explorer.getCollisionRectStairs().y + 
             									  this.explorer.getPixelsThroughFloor()));
@@ -65,6 +72,7 @@ public class ExplorerJumpRight extends AnimatedSprite
         }
   
         if(ExplorerManager.CollisionDetectionJumpRight()){
+        	this.explorer.getCollisionRectStairs().setHeight(17f);         	
         	this.explorer.setPosition(this.explorer.getPosition().add(this.explorer.getPixelsInWallRight(), 0f));
         	this.explorer.getIdleFallAfterJump().Initialize();
         	this.explorer.setState(this.explorer.getIdleFallAfterJump());

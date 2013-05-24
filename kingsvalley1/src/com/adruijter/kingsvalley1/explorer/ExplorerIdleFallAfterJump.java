@@ -14,7 +14,7 @@ public class ExplorerIdleFallAfterJump extends AnimatedSprite
 		super(explorer);
 		this.explorer = explorer;
 		this.i = 0;
-		this.Initialize();
+		//this.Initialize();
 	}
 	
 	public void Initialize() //Sets the start positions
@@ -22,12 +22,12 @@ public class ExplorerIdleFallAfterJump extends AnimatedSprite
 		this.startX = this.explorer.getPosition().x;
 		this.startY = this.explorer.getPosition().y;
 		this.y = this.startY;
-		this.timer = 0f;
+		//this.timer = 0f;
 	}
 	
 	public void Update(float delta)
 	{
-		super.Update(delta);
+		//super.Update(delta);
 		this.timer += delta; //Updates the timer
 		this.y = (float)(1200f * Math.pow(this.timer, 2d) + this.startY); //Calculates the Y value
 		
@@ -35,6 +35,7 @@ public class ExplorerIdleFallAfterJump extends AnimatedSprite
 		
 		if (ExplorerManager.CollisionDetectionGroundAfterJump())
 		{
+			this.explorer.getCollisionRectStairs().setWidth(20f);
 			this.explorer.setPosition(new Vector2(this.startX, this.explorer.getCollisionRectStairs().y + this.explorer.getPixelsThroughFloor()));
 			this.explorer.setState(this.explorer.getIdleRightNoLineairMovement());
 			this.timer = 0;

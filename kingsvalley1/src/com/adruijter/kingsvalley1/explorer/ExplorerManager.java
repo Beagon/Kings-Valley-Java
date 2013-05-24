@@ -284,7 +284,7 @@ public class ExplorerManager
     {
     	for (Floor floor : floors)
     	{
-    		if (explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+    		if (explorer.getCollisionRectJumpRight().overlaps(floor.getCollisionRectangle()))
     		{
     			float inWall = floor.getCollisionRectangle().x - (explorer.getCollisionRectJumpRight().x + explorer.getCollisionRectJumpRight().getWidth()); //Calculate the pixels
     			explorer.setPixelsInWallRight(inWall);
