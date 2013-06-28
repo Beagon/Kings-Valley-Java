@@ -58,6 +58,7 @@ public class Level {
     private ArrayList<Character> time;
     private ArrayList<Character> highScore;
 	private ExitDoor exitDoor;
+	private int levelIndex;
 	
     //Properties
     public KingsValley1 getGame()
@@ -117,10 +118,15 @@ public class Level {
 		this.exitDoor = exitDoor;
 	}
 
+	public int getLevelIndex() {
+		return levelIndex;
+	}
+
 	//Constructor
     public Level(KingsValley1 game, int levelIndex) throws IOException 
 	{
 		this.game = game;
+		this.levelIndex = levelIndex;
 		this.levelPath = "data/" + levelIndex + ".txt";
 		this.jewels = new ArrayList<Jewel>();
 		this.score = new ArrayList<Character>();

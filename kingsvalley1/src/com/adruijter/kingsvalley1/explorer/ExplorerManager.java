@@ -7,6 +7,8 @@ import com.adruijter.kingsvalley1.floor.Floor;
 import com.adruijter.kingsvalley1.jewel.Jewel;
 import com.adruijter.kingsvalley1.level.Level;
 import com.adruijter.kingsvalley1.score.Score;
+import com.adruijter.kingsvalley1.screens.EndScreen;
+import com.adruijter.kingsvalley1.screens.GameScreen;
 import com.adruijter.kingsvalley1.stairsRight.StairsRight;
 import com.adruijter.kingsvalley1.stairsLeft.StairsLeft;
 import com.adruijter.kingsvalley1.time.Time;
@@ -377,7 +379,18 @@ public class ExplorerManager
     			Score.setHighScore(Score.getHighScore());
     			Score.AdjustHighScore(level);
     			}
+    			if(level.getLevelIndex() > 1){
     			level.getGame().setScreen(level.getGame().getEndScreen());
+    			}else{
+    			level.getMasterMelody().stop();
+    		    level.setMasterMelody((Gdx.audio.newMusic(Gdx.files.internal("data/Sound/exitLevelTune.mp3"))));
+    		    level.getMasterMelody().play();
+    		    level.getMasterMelody().setLooping(false);
+    			level.getGame().setLevelIndex(level.getLevelIndex() + 1);
+    		    GameScreen gameScreen = new GameScreen(level.getGame());
+    			level.getGame().setGameScreen(gameScreen);
+        		level.getGame().setScreen(level.getGame().getGameScreen());   				
+    			}
 	    		System.out.println("You won the game, submiting score to highscore.");
 	    		response = Functions.getUrlSource("http://www.struckbythunder.net/KingsValley/SetHighscore.php?s=" + Score.getGameScore());
 	    		System.out.println("You've ended up as #" + response + " on our highscore!");

@@ -23,8 +23,19 @@ public class KingsValley1 extends Game
 	private static boolean isAndroid = true;
 	private Color backgroundColor = new Color(0.125f, 0.125f, 0.957f, 1f);
 	private Music introMusic;
+	private int levelIndex = 0;
 	
 	
+	public int getLevelIndex() {
+		return levelIndex;
+	}
+
+
+	public void setLevelIndex(int levelIndex) {
+		this.levelIndex = levelIndex;
+	}
+
+
 	//Properties
 	public static boolean IsAndroid()
 	{

@@ -16,7 +16,7 @@ public class GameScreen implements Screen {
 	private Level level;
 	private float ratio, yzoom = 480f;
 	private FPSLogger logger;
-	
+	private int levelIndex;
 	
 	public float getRatio() {
 		return ratio;
@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
 	//Constructor
 	public GameScreen(KingsValley1 game) 
 	{
+		this.levelIndex = game.getLevelIndex();
 		this.game = game;
 		this.logger = new FPSLogger();
 		cam = new OrthographicCamera();		
@@ -64,7 +65,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		try {
-			this.level = new Level(this.game, 0);
+			this.level = new Level(this.game, levelIndex);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
