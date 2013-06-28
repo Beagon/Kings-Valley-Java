@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AnimatedSprite
 {
 	//Fields
-    private Explorer explorer;
+    protected Explorer explorer;
     private int[] xValue = { 0, 18, 36, 54, 72, 90, 108, 126 };
     protected int i = 0;
     private float timer = 0;
@@ -37,6 +37,7 @@ public class AnimatedSprite
     //Draw
     public void Draw(float delta)
     {
+    	/*
     	this.explorer.getGame().getBatch().draw(this.explorer.getTexture(),
 								    			(int)this.explorer.getPosition().x,
 								   				(int)this.explorer.getPosition().y,
@@ -47,6 +48,22 @@ public class AnimatedSprite
                                    				18,
                                    				32,
                                    				this.effect,
-                                   				true);
+                                   				true);*/
+    	
+    	if (this.effect)
+    	{
+    		if (!this.explorer.getRegion().get("explorer" + Integer.toString(this.i)).isFlipX())
+    		this.explorer.getRegion().get("explorer" + Integer.toString(this.i)).flip(true, false);    		
+    	}
+    	else
+    	{
+    		if (this.explorer.getRegion().get("explorer" + Integer.toString(this.i)).isFlipX())
+    		this.explorer.getRegion().get("explorer" + Integer.toString(this.i)).flip(true, false); 
+    	}
+    	this.explorer.getGame().getBatch().draw(this.explorer.getRegion().get("explorer" + Integer.toString(this.i)),
+								    			(int)this.explorer.getPosition().x,
+								   				(int)this.explorer.getPosition().y,
+								   				18f,
+								   				32f);
     }
 }

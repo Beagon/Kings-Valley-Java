@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import com.adruijter.kingsvalley1.KingsValley1;
 import com.adruijter.kingsvalley1.brick.Brick;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -17,6 +18,7 @@ public class Floor
 	private char highOrLowFallLeft;
 	private ArrayList<Brick> floor;
 	private Rectangle collisionRectangle;
+	private Color color = new Color(1f,0f,0f,1f);
 	
 	//Properties
 	public Rectangle getCollisionRectangle() {
@@ -31,6 +33,21 @@ public class Floor
 		return this.amountOfBricks;
 	}
 
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public char getHighOrLowFallRight() {
+		return highOrLowFallRight;
+	}
+	
+	public char getHighOrLowFallLeft() {
+		return highOrLowFallLeft;
+	}
+	
 	//Constructor
 	public Floor(KingsValley1 game, Vector2 position, TextureRegion region, int amountOfBricks,
 					char highOrLowFallRight, char highOrLowFallLeft)
@@ -61,6 +78,12 @@ public class Floor
 	
 	public void Draw(float delta)
 	{
+		/*
+		this.game.getBatch().setColor(1f,0f,0f,1f);
+		this.game.getBatch().draw(this.game.getGameScreen().getLevel().getExplorer().getCollisionText(), this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().x, this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().y, 
+				this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().getWidth(), this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().getHeight());
+		this.game.getGameScreen().getLevel().getExplorer().getGame().getBatch().setColor(this.color);*/
+		
 		for (Brick brick : this.floor)
 		{
 			brick.Draw(delta);

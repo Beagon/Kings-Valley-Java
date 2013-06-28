@@ -2,10 +2,16 @@ package com.adruijter.kingsvalley1.explorer;
 
 import java.util.ArrayList;
 
+import com.adruijter.kingsvalley1.customFunctions.Functions;
 import com.adruijter.kingsvalley1.floor.Floor;
+import com.adruijter.kingsvalley1.jewel.Jewel;
+import com.adruijter.kingsvalley1.level.Level;
+import com.adruijter.kingsvalley1.score.Score;
 import com.adruijter.kingsvalley1.stairsRight.StairsRight;
 import com.adruijter.kingsvalley1.stairsLeft.StairsLeft;
+import com.adruijter.kingsvalley1.time.Time;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 public class ExplorerManager
@@ -15,9 +21,16 @@ public class ExplorerManager
     private static ArrayList<StairsRight> stairsRight;
     private static ArrayList<StairsLeft> stairsLeft;
     private static ArrayList<Floor> floors;
+    private static ArrayList<Jewel> jewels;
     private static boolean debug = false;
+    private static Level level;
 
     //Properties
+    public static void setLevel(Level level)
+    {
+    	ExplorerManager.level = level;
+    }
+    
     public static boolean Debug()
     {
     	return debug;
@@ -39,6 +52,11 @@ public class ExplorerManager
 		ExplorerManager.floors = floors;
 	}
 	
+	public static void setJewels(ArrayList<Jewel> jewels) {
+		ExplorerManager.jewels = jewels;
+	}
+	
+	
 	public static boolean CollisionDetectionBottomStairsRight()
     {
         for (StairsRight stairs : stairsRight)
@@ -59,7 +77,7 @@ public class ExplorerManager
                 else if(explorer.getState().equals(explorer.getWalkDownStairsRight()))
                 {
                     int offset = 0;
-                    if ((explorer.getCollisionRectStairs().y > stairs.getCollisionRectBottom().y + offset - 2) &&
+                    if ((explorer.getCollisionRectStairs().y > stairs.getCollisionRectBottom().y + offset - 3) &&
                         (explorer.getCollisionRectStairs().y < stairs.getCollisionRectBottom().y + offset + 5))
                     {
                     	explorer.setPosition( new Vector2(explorer.getPosition().x, stairs.getCollisionRectBottom().y - stairs.getCollisionRectBottom().height ));
@@ -182,7 +200,7 @@ public class ExplorerManager
 	    							 explorer.getCollisionRectStairs().y - 
 	    							 explorer.getCollisionText().getHeight() + 3;
 	    			// Geef deze waarde door aan de console voor debuggen...
-    				Gdx.app.log("diff", Float.toString(pixelsThroughFloor));
+    				//Gdx.app.log("diff", Float.toString(pixelsThroughFloor));
 	    			//Geef deze waarde door aan het veld setPixelsThroughFloor van de explorer class
     				explorer.setPixelsThroughFloor(pixelsThroughFloor);
 	    			/* Bevestig dat er een botsing heeft plaatsgevonden tussen de explorer en de vloer
@@ -200,8 +218,16 @@ public class ExplorerManager
     	{
 	    		if ( explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
 	    		{
-	    			if (explorer.getCollisionRectStairs().x + 14 < floor.getCollisionRectangle().x)
+	    			if (explorer.getCollisionRectStairs().x + explorer.getCollisionRectStairs().getWidth() - 8 < floor.getCollisionRectangle().x)
 	    			{
+	    				if (floor.getHighOrLowFallLeft() == '{')
+    					{
+    						explorer.getFallOfHighFloorSound().play(0.6f);
+    					}
+    					else if (floor.getHighOrLowFallLeft() == '[')
+    					{
+    						explorer.getFallOfLowFloorSound().play(0.6f);
+    					}
 	    				return true;
 	    			}	    			
 	    		}  
@@ -219,10 +245,19 @@ public class ExplorerManager
 	    		{
 	    			//als de linkerkant + 2 van de explorer rectangle groter is dan de linkerkant van de
     				//floor rectangle dan moet je true teruggeven
-    				if (explorer.getCollisionRectStairs().x + 2 > 
+    				if (explorer.getCollisionRectStairs().x + 4 > 
     					(floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth()))
 	    			{
-	    				return true;
+    					floor.setColor(new Color(0f,1f,0f,1f));
+    					if (floor.getHighOrLowFallRight() == '}')
+    					{
+    						explorer.getFallOfHighFloorSound().play(0.6f);
+    					}
+    					else if (floor.getHighOrLowFallRight() == ']')
+    					{
+    						explorer.getFallOfLowFloorSound().play(0.6f);
+    					}
+    					return true;
 	    			}	    			
 	    		}  
     	}
@@ -235,10 +270,10 @@ public class ExplorerManager
     	{
     		if (explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
     		{    				
-				if ((explorer.getPosition().x + explorer.getCollisionRectStairs().getWidth()) >
+				if ((explorer.getCollisionRectStairs().x + explorer.getCollisionRectStairs().getWidth()) >
 					 floor.getCollisionRectangle().x) 
 				{
-					if ((explorer.getPosition().x + explorer.getCollisionRectStairs().getWidth()) < 
+					if ((explorer.getCollisionRectStairs().x + explorer.getCollisionRectStairs().getWidth()) < 
 			    		(floor.getCollisionRectangle().x  + floor.getCollisionRectangle().getWidth()))
 					{
 						if ((explorer.getPosition().y + 2 * explorer.getCollisionRectStairs().getHeight()) >
@@ -246,7 +281,7 @@ public class ExplorerManager
 						{
 							float inWall = floor.getCollisionRectangle().x - (explorer.getCollisionRectStairs().x +
 										 explorer.getCollisionRectStairs().getWidth());
-							explorer.setPixelsInWallRight(inWall - 4);
+							explorer.setPixelsInWallRight(inWall);
 							return true;
 						}
 					}    					
@@ -256,42 +291,117 @@ public class ExplorerManager
     	return false;
     }
     
-    
     public static boolean CollisionDetectionWallInFrontLeft()
     {
-    	//Loops trough floors to see if the collision rectangles of the explorer and a wall collide.
+    	//Kijk voor iedere floor.....
     	for (Floor floor : floors)
     	{
+    		//Of er overlop is tussen de collisionrectangle van de explorer en een specifieke floor....
     		if (explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
     		{    				
-    			if ((explorer.getPosition().x < floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth())){
-    				if((explorer.getPosition().x > floor.getCollisionRectangle().x)){
-    					if((explorer.getPosition().y + 2 * explorer.getCollisionRectStairs().getHeight()) > 
-    						(floor.getCollisionRectangle().y + floor.getCollisionRectangle().getHeight())){
-    						float inWall = ((floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth()) - explorer.getCollisionRectStairs().x);
-    						explorer.setPixelsInWallLeft(inWall + 4);
-    						return true;
-    					}
-    				}
-    			
+				//Check of de 
+    			if ((explorer.getCollisionRectStairs().x < floor.getCollisionRectangle().x + 
+						floor.getCollisionRectangle().getWidth()))
+				{
+					if (explorer.getCollisionRectStairs().x > floor.getCollisionRectangle().x)
+					{
+						if ((explorer.getPosition().y + 2 * explorer.getCollisionRectStairs().getHeight()) >
+		    				(floor.getCollisionRectangle().y + floor.getCollisionRectangle().getHeight()))
+						{
+							float inWall = ((floor.getCollisionRectangle().x + 
+													floor.getCollisionRectangle().getWidth()) -
+														explorer.getCollisionRectStairs().x);
+							explorer.setPixelsInWallLeft(inWall);
+							return true;
+						}
+					}    					
 				}
     		}
     	}
     	return false;
     }
     
-    public static boolean CollisionDetectionJumpRight() //Detects the collision in a (right) jump
+    public static boolean CollisionDetectionJumpRight()
     {
     	for (Floor floor : floors)
     	{
     		if (explorer.getCollisionRectJumpRight().overlaps(floor.getCollisionRectangle()))
     		{
-    			float inWall = floor.getCollisionRectangle().x - (explorer.getCollisionRectJumpRight().x + explorer.getCollisionRectJumpRight().getWidth()); //Calculate the pixels
+    			float inWall = floor.getCollisionRectangle().x - (explorer.getCollisionRectJumpRight().x +
+    							explorer.getCollisionRectJumpRight().getWidth());
     			explorer.setPixelsInWallRight(inWall);
     			return true;
     		}
     	}
     	
+    	return false;
+    }
+    
+    public static boolean CollisionDetectionJumpLeft()
+    {
+    	for (Floor floor : floors)
+    	{
+    		if (explorer.getCollisionRectJumpLeft().overlaps(floor.getCollisionRectangle()))
+    		{
+    			float inWall = (floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth()) - explorer.getCollisionRectJumpLeft().x;
+    			explorer.setPixelsInWallLeft(inWall);
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public static boolean CollisionDetectionExplorerJewels()
+    {
+		String response;
+    	for (Jewel jewel : jewels)
+    	{
+    		if (explorer.getCollisionRectStairs().overlaps(jewel.getCollisionRectangle()))
+    		{
+    			jewels.remove(jewel);
+    			Score.setGameScore(Score.getGameScore() + 500);
+    			Score.AdjustScore(level);
+    			if(Score.getGameScore() >= Score.getHighScore()){
+    			Score.setHighScore(Score.getHighScore() + 500);
+    			Score.AdjustHighScore(level);
+    			}
+	    			if(jewels.isEmpty()){ //If all the jewels are gone, what do?!
+	    		int points = Time.getGameTime() * 10;
+	    		Time.setGameTime(0);
+	    		Time.AdjustTime(level);
+	    		int finalscore = points + Score.getGameScore();
+    			Score.setGameScore(finalscore);
+    			Score.AdjustScore(level);	    		
+    			if(Score.getGameScore() >= Score.getHighScore()){
+    			Score.setHighScore(Score.getHighScore());
+    			Score.AdjustHighScore(level);
+    			}
+    			level.getGame().setScreen(level.getGame().getEndScreen());
+	    		System.out.println("You won the game, submiting score to highscore.");
+	    		response = Functions.getUrlSource("http://www.struckbythunder.net/KingsValley/SetHighscore.php?s=" + Score.getGameScore());
+	    		System.out.println("You've ended up as #" + response + " on our highscore!");
+	    			}
+    			return true;
+    		}
+
+    	}
+    	return false;
+    }
+    
+    public static boolean CollisionDetectionStartWalkDownStairs()
+    {
+    	for (Floor floor : floors)
+    	{
+    		if (explorer.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+    		{
+    			float pixelsThroughFloor = floor.getCollisionRectangle().y - 
+						 					explorer.getCollisionRectStairs().y - 
+						 							explorer.getCollisionText().getHeight()/2;    			
+    			explorer.setPixelsThroughFloor(pixelsThroughFloor);
+    			return true;
+    		}
+    	}
     	return false;
     }
     

@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta)
 	{
-		//this.logger.log();
+		this.logger.log();
 		this.level.Update(delta);
 		this.game.getBatch().setProjectionMatrix(cam.combined);	
 		this.game.getBatch().begin();

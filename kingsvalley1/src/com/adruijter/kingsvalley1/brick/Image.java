@@ -14,8 +14,23 @@ public class Image
     protected Vector2 position;
     protected TextureRegion region;
 
+    public TextureRegion getRegion() {
+		return region;
+	}
 
-    //Constructor
+	public void setRegion(TextureRegion region) {
+		this.region = region;
+	}
+
+    public Vector2 getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+
+	//Constructor
     public Image(KingsValley1 game, Vector2 position, TextureRegion region)
     {
         this.game = game;
@@ -35,8 +50,8 @@ public class Image
 				   				  this.position.y,
 				   				  0f,
 				   				  0f,
-				   				  16f,
-				   				  16f,
+				   				  this.region.getRegionWidth(),
+				   				  this.region.getRegionHeight(),
 				   				  1f,
 				   				  1f,
 				   				  0f);

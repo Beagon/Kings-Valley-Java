@@ -33,6 +33,11 @@ public class ExplorerFallOfFloorRight extends AnimatedSprite
         this.k = (int)(this.startY - this.startK);
         this.prev_y = this.startY;
         this.a = this.CalculateA();
+        
+        //29-5 9:47 test
+        this.explorer.getCollisionRectStairs().setWidth(10f);
+        this.explorer.getCollisionRectStairs().setX(this.explorer.getPosition().x + 10);
+        //einde
     }
 
     private float CalculateA()
@@ -53,23 +58,47 @@ public class ExplorerFallOfFloorRight extends AnimatedSprite
         else
         {
         	this.explorer.setPosition(this.explorer.getPosition().add(0, 10f));
-        }     
+        } 
+        
+        this.explorer.getCollisionRectStairs().setWidth(10f);
+        this.explorer.getCollisionRectStairs().setX(this.explorer.getCollisionRectStairs().x + 10);
+        
+       	this.explorer.getCollisionRectJumpLeft().setX(this.explorer.getPosition().x + 10);
         
         if (ExplorerManager.CollisionDetectionGroundAfterJump())
         {
             this.explorer.setPosition(new Vector2(x,
             									  this.explorer.getCollisionRectStairs().y + 
             									  this.explorer.getPixelsThroughFloor()));
+            //test 10:51 29-5
+            //this.explorer.getCollisionRectStairs().setWidth(20f);
+            this.explorer.getCollisionRectStairs().setWidth(8f);
+            this.explorer.getCollisionRectStairs().setX(this.explorer.getCollisionRectStairs().x + 12);
+            
+            //test
+            this.explorer.getCollisionRectJumpLeft().setX(this.explorer.getPosition().x + 10);
+            
            	if (KingsValley1.IsAndroid())
-            this.explorer.setState(this.explorer.getWalkRight());
+           	{
+           		this.explorer.getWalkRight().Initialize();
+           		this.explorer.setState(this.explorer.getWalkRight());
+           	}
            	else
-           	this.explorer.setState(this.explorer.getIdleRight());
+           	{
+           		this.explorer.getIdleRight().Initialize();
+           		this.explorer.setState(this.explorer.getIdleRight());
+           	}
         }
         //base.Update(gameTime);
     }
 
     public void Draw(float delta)
     {
-        super.Draw(delta);
+    	/*
+    	this.explorer.getGame().getBatch().setColor(0f, 1f, 0f, 1f);
+		this.explorer.getGame().getBatch().draw(this.explorer.getCollisionText(), this.explorer.getCollisionRectStairs().x, this.explorer.getCollisionRectStairs().y, 
+				this.explorer.getCollisionRectStairs().getWidth(), this.explorer.getCollisionRectStairs().getHeight());
+		this.explorer.getGame().getBatch().setColor(1f, 1f, 1f, 1f);*/
+    	super.Draw(delta);
     }
 }

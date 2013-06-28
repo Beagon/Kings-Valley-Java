@@ -1,6 +1,7 @@
 package com.adruijter.kingsvalley1.gesturelistener;
 
 import com.adruijter.kingsvalley1.explorer.Explorer;
+import com.adruijter.kingsvalley1.explorer.ExplorerManager;
 import com.adruijter.kingsvalley1.level.Level;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
@@ -18,22 +19,22 @@ public class ExplorerGestureListener implements GestureListener
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) 
 	{
-		if ( this.explorer.getState().equals(this.explorer.getWalkUpStairsRight()))
-		{
-			this.explorer.setState(this.explorer.getIdleUpStairsRight());
-		}
-		else if ( this.explorer.getState().equals(this.explorer.getWalkDownStairsRight()))
-		{
-			this.explorer.setState(this.explorer.getIdleDownStairsRight());
-		}
-		else if ( this.explorer.getState().equals(this.explorer.getWalkUpStairsLeft()))
-		{
-			this.explorer.setState(this.explorer.getIdleUpStairsLeft());
-		}
-		else if ( this.explorer.getState().equals(this.explorer.getWalkDownStairsLeft()))
-		{
-			this.explorer.setState(this.explorer.getIdleDownStairsLeft());
-		}
+			if ( this.explorer.getState().equals(this.explorer.getWalkUpStairsRight()))
+			{
+				this.explorer.setState(this.explorer.getIdleUpStairsRight());
+			}
+			else if ( this.explorer.getState().equals(this.explorer.getWalkDownStairsRight()))
+			{
+				this.explorer.setState(this.explorer.getIdleDownStairsRight());
+			}
+			else if ( this.explorer.getState().equals(this.explorer.getWalkUpStairsLeft()))
+			{
+				this.explorer.setState(this.explorer.getIdleUpStairsLeft());
+			}
+			else if ( this.explorer.getState().equals(this.explorer.getWalkDownStairsLeft()))
+			{
+				this.explorer.setState(this.explorer.getIdleDownStairsLeft());
+			}
 		return false;
 	}
 
@@ -71,7 +72,11 @@ public class ExplorerGestureListener implements GestureListener
 			 !this.explorer.getState().equals(this.explorer.getWalkUpStairsLeft()) 		&&
 			 !this.explorer.getState().equals(this.explorer.getWalkDownStairsLeft())    &&
 			 !this.explorer.getState().equals(this.explorer.getJumpIdleLeft())			&&
-			 !this.explorer.getState().equals(this.explorer.getJumpIdleRight()))
+			 !this.explorer.getState().equals(this.explorer.getJumpIdleRight())			&&
+			 !this.explorer.getState().equals(this.explorer.getFallOfFloorLeft())		&&
+			 !this.explorer.getState().equals(this.explorer.getStartIdle())				&&
+			 !this.explorer.getState().equals(this.explorer.getStartWalkDownStairs())	&&
+			 !this.explorer.getState().equals(this.explorer.getStart()))		 
 		{
 			if ( velocityX > 0 )
 			{
@@ -89,15 +94,17 @@ public class ExplorerGestureListener implements GestureListener
 					}					
 					else
 					{
+						this.explorer.getWalkRight().Initialize();
 						this.explorer.setState(this.explorer.getWalkRight());
 					}
 				}
 				else if (angle > 290 && angle < 340 )
 				{
-					if ( this.explorer.getState().equals(this.explorer.getWalkRight()) ||
+					if ( (this.explorer.getState().equals(this.explorer.getWalkRight()) ||
 						 this.explorer.getState().equals(this.explorer.getWalkLeft()) ||
 						 this.explorer.getState().equals(this.explorer.getIdleRight()) ||
-						 this.explorer.getState().equals(this.explorer.getIdleLeft()))
+						 this.explorer.getState().equals(this.explorer.getIdleLeft()) ||
+						 this.explorer.getState().equals(this.explorer.getIdleRightNoLineairMovement())) && !ExplorerManager.CollisionDetectionJumpRight())
 					{
 						this.explorer.getJumpRight().Initialize();
 						this.explorer.setState(this.explorer.getJumpRight());
@@ -105,10 +112,11 @@ public class ExplorerGestureListener implements GestureListener
 				}
 				else if (angle > 270 && angle < 290 )
 				{
-					if ( this.explorer.getState().equals(this.explorer.getWalkRight()) || 
+					if ( (this.explorer.getState().equals(this.explorer.getWalkRight()) || 
 						 this.explorer.getState().equals(this.explorer.getWalkLeft()) || 
 						 this.explorer.getState().equals(this.explorer.getIdleRight()) ||
-						 this.explorer.getState().equals(this.explorer.getIdleLeft()))
+						 this.explorer.getState().equals(this.explorer.getIdleLeft()) ||
+						 this.explorer.getState().equals(this.explorer.getIdleRightNoLineairMovement())) && !ExplorerManager.CollisionDetectionJumpRight())
 					{
 						this.explorer.getJumpIdleRight().Initialize();
 						this.explorer.setState(this.explorer.getJumpIdleRight());
@@ -131,15 +139,18 @@ public class ExplorerGestureListener implements GestureListener
 					}
 					else
 					{
+						this.explorer.getWalkLeft().Initialize();
 						this.explorer.setState(this.explorer.getWalkLeft());
 					}
 				}
 				else if (angle < 250  && angle > 200)
 				{
-					if ( this.explorer.getState().equals(this.explorer.getWalkLeft()) ||
+					if ( (this.explorer.getState().equals(this.explorer.getWalkLeft()) ||
 						 this.explorer.getState().equals(this.explorer.getWalkRight()) ||
 						 this.explorer.getState().equals(this.explorer.getIdleLeft()) ||
-						 this.explorer.getState().equals(this.explorer.getIdleRight()))
+						 this.explorer.getState().equals(this.explorer.getIdleRight()) ||
+						 this.explorer.getState().equals(this.explorer.getIdleLeftNoLineairMovement())) &&
+						 !ExplorerManager.CollisionDetectionJumpLeft())
 					{
 						this.explorer.getJumpLeft().Initialize();
 						this.explorer.setState(this.explorer.getJumpLeft());
@@ -147,10 +158,12 @@ public class ExplorerGestureListener implements GestureListener
 				}
 				else if (angle < 270  && angle > 250)
 				{
-					if ( this.explorer.getState().equals(this.explorer.getWalkLeft()) || 
+					if ( (this.explorer.getState().equals(this.explorer.getWalkLeft()) || 
 						 this.explorer.getState().equals(this.explorer.getWalkRight()) || 
 					     this.explorer.getState().equals(this.explorer.getIdleLeft()) ||
-					     this.explorer.getState().equals(this.explorer.getIdleRight()))
+					     this.explorer.getState().equals(this.explorer.getIdleRight()) ||
+					     this.explorer.getState().equals(this.explorer.getIdleLeftNoLineairMovement())) &&
+					     !ExplorerManager.CollisionDetectionJumpLeft())
 					{
 						this.explorer.getJumpIdleLeft().Initialize();
 						this.explorer.setState(this.explorer.getJumpIdleLeft());

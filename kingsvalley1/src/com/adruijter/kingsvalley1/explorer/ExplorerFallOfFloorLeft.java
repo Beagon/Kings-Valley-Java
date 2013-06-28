@@ -33,6 +33,11 @@ public class ExplorerFallOfFloorLeft extends AnimatedSprite
         this.k = (int)(this.startY - this.startK);
         this.prev_y = this.startY;
         this.a = this.CalculateA();
+        
+        //30-5 0:58 test
+        this.explorer.getCollisionRectStairs().setWidth(5f);
+        this.explorer.getCollisionRectStairs().setX(this.explorer.getPosition().x);
+        //einde
     }
 
     private float CalculateA()
@@ -55,6 +60,11 @@ public class ExplorerFallOfFloorLeft extends AnimatedSprite
         	this.explorer.setPosition(this.explorer.getPosition().add(0, 10f));
         }
         
+        //this.explorer.getCollisionRectStairs().setWidth(10f);
+        
+      //30-5 0:58 test
+        this.explorer.getCollisionRectStairs().setX(this.explorer.getPosition().x);
+        //einde
         
         
         if (ExplorerManager.CollisionDetectionGroundAfterJump())
@@ -62,8 +72,12 @@ public class ExplorerFallOfFloorLeft extends AnimatedSprite
             this.explorer.setPosition(new Vector2(x,
             									  this.explorer.getCollisionRectStairs().y + 
             									  this.explorer.getPixelsThroughFloor()));
+            this.explorer.getCollisionRectStairs().setWidth(20f);
            	if (KingsValley1.IsAndroid())
-            this.explorer.setState(this.explorer.getWalkLeft());
+           	{
+           		this.explorer.getWalkLeft().Initialize();
+           		this.explorer.setState(this.explorer.getWalkLeft());
+           	}
            	else
            	this.explorer.setState(this.explorer.getIdleLeft());
         }

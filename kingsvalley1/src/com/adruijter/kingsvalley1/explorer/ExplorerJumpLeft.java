@@ -10,6 +10,7 @@ public class ExplorerJumpLeft extends AnimatedSprite
     private Explorer explorer;
     private float startX, startY, a;
     private int startH, startK, h, k;
+    private float collisionRectJumpLeftStartY;
 
 
     //Constructor
@@ -30,6 +31,9 @@ public class ExplorerJumpLeft extends AnimatedSprite
         this.h = (int)(this.startX + this.startH);
         this.k = (int)(this.startY - this.startK);
         this.a = this.CalculateA();
+        this.explorer.getCollisionRectStairs().setWidth(2f);
+        this.explorer.getCollisionRectStairs().setHeight(12f);
+        this.collisionRectJumpLeftStartY = this.explorer.getCollisionRectJumpLeft().y;
     }
 
     private float CalculateA()
@@ -42,15 +46,44 @@ public class ExplorerJumpLeft extends AnimatedSprite
         float x = this.explorer.getPosition().x - this.explorer.getSpeed();
         float y = (float)(this.a * Math.pow((x - this.h), 2d) + this.k);
         this.explorer.setPosition(new Vector2(x, y));
+        
+        if (x >= this.h)
+        {
+        	this.explorer.getCollisionRectStairs().setX(this.explorer.getCollisionRectStairs().x + 18f);
+        	this.explorer.getCollisionRectJumpLeft().setY(this.collisionRectJumpLeftStartY);
+        	
+        }
+        else if (x < this.h)
+        {
+        	this.explorer.getCollisionRectJumpLeft().setY(this.collisionRectJumpLeftStartY + 15);
+        	//this.explorer.getCollisionRectStairs().setX(this.explorer.getCollisionRectStairs().x + 18f);
+        	this.explorer.getCollisionRectStairs().setWidth(1f);
+            this.explorer.getCollisionRectStairs().setHeight(17f);
+        }
+        
         if (ExplorerManager.CollisionDetectionGroundAfterJump())
         {
-            this.explorer.setPosition(new Vector2(x,
+        	this.explorer.getCollisionRectStairs().setWidth(20f);
+        	this.explorer.setPosition(new Vector2(x,
             									  this.explorer.getCollisionRectStairs().y + 
             									  this.explorer.getPixelsThroughFloor()));
+        	this.explorer.getCollisionRectJumpLeft().setY(this.collisionRectJumpLeftStartY + 15);
            	if (KingsValley1.IsAndroid())
-            this.explorer.setState(this.explorer.getWalkLeft());
+           	{
+           		this.explorer.getWalkLeft().Initialize();
+           		this.explorer.setState(this.explorer.getWalkLeft());
+           	}
            	else
            	this.explorer.setState(this.explorer.getIdleLeft());
+        }
+        
+        if (ExplorerManager.CollisionDetectionJumpLeft())
+        {
+        	this.explorer.getCollisionRectStairs().setX(this.explorer.getCollisionRectStairs().x + 19f);
+        	this.explorer.getCollisionRectStairs().setHeight(17f);
+        	this.explorer.setPosition(this.explorer.getPosition().add(this.explorer.getPixelsInWallLeft(),0f));
+        	this.explorer.getIdleFallAfterJump().Initialize(true);
+        	this.explorer.setState(this.explorer.getIdleFallAfterJump());
         }
         //base.Update(gameTime);
     }
