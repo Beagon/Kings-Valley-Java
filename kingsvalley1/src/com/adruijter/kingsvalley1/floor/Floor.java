@@ -78,12 +78,7 @@ public class Floor
 	
 	public void Draw(float delta)
 	{
-		/*
-		this.game.getBatch().setColor(1f,0f,0f,1f);
-		this.game.getBatch().draw(this.game.getGameScreen().getLevel().getExplorer().getCollisionText(), this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().x, this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().y, 
-				this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().getWidth(), this.game.getGameScreen().getLevel().getExplorer().getCollisionRectStairs().getHeight());
-		this.game.getGameScreen().getLevel().getExplorer().getGame().getBatch().setColor(this.color);*/
-		
+	
 		for (Brick brick : this.floor)
 		{
 			brick.Draw(delta);

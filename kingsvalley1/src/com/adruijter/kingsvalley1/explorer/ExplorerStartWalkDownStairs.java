@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 public class ExplorerStartWalkDownStairs extends AnimatedSprite
 {
 	private Vector2 rightDoorPosition, leftDoorPosition;
-	private float timer = 0f;
 	private Explorer explorer;
 	
 	public ExplorerStartWalkDownStairs(Explorer explorer)

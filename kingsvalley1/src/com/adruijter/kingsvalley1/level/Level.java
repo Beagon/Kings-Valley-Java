@@ -151,9 +151,6 @@ public class Level {
         ExplorerManager.setJewels(this.jewels);
         
         this.setMasterMelody(Gdx.audio.newMusic(Gdx.files.internal("data/Sound/masterMelody.mp3")));
-        //this.masterMelody.play();
-       // this.masterMelody.setLooping(true);
-        //this.masterMelody.setVolume(0.6f);
 	}
 
 	private void LoadAssets() throws IOException 
@@ -495,24 +492,16 @@ public class Level {
 			
 		}
 		this.updates++; 
-		if((this.updates % 60) == 0){ //Update every second
+		if(((this.updates % 60) == 0) && ((this.updates / 60) >= 5)){ //Update every second (After 5 seconds for game to start)
 		Time.setGameTime(Time.getGameTime() - 1); //Set time -1
 		Time.AdjustTime(this); //Adjust it.
 		}
-		//Gdx.app.log("state: ", this.explorer.getState().toString());
     }
 
     public void Draw(float delta)
     {
         for (IBuildingBlock[] row : this.bricks )
-        	//for (int i = 0; i < this.bricks.length; i++)
         {
-            /*
-        	for (int j = 0; j < this.bricks[i].length; j++)
-            	//for (int j = 0; j < this.bricks[i].length; j++)
-            {
-               this.bricks[i][j].Draw(delta);
-            }*/
         	for ( IBuildingBlock column : row )
         	{
         		column.Draw(delta);
@@ -528,14 +517,6 @@ public class Level {
         {
             stair.Draw(delta);
         }
-        
-        //if (ExplorerManager.Debug())
-        //{
-	        for (Floor floor : this.floors)
-	        {
-	        	//floor.Draw(delta);
-	        }
-        //}
 	        
 	    for (Jewel jewel : this.jewels)
 	    {
@@ -546,6 +527,7 @@ public class Level {
 	    {
 	    	this.game.getBatch().setColor(1f,1f,1f,1f);
 	    	character.Draw(delta);
+			Score.AdjustScore(this);
 	    }
 	    
 	    for (Character character : this.highScore)

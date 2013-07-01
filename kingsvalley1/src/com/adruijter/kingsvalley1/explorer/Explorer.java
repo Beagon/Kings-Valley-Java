@@ -6,10 +6,7 @@ import java.util.Map;
 
 import com.adruijter.kingsvalley1.KingsValley1;
 import com.adruijter.kingsvalley1.animatedsprite.AnimatedSprite;
-import com.adruijter.kingsvalley1.score.Score;
-import com.adruijter.kingsvalley1.time.Time;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -55,7 +52,6 @@ public class Explorer
 	private ExplorerStart start;
 	private ExplorerStartWalkDownStairs startWalkDownStairs;
 	private ExplorerStartIdle startIdle;
-	//Hallo for pull
 	
 	//Properties
 	public Vector2 getPosition()
@@ -374,20 +370,6 @@ public class Explorer
 	//Draw
 	public void Draw(float delta)
 	{
-		/*
-		this.getGame().getBatch().setColor(1f, 1f, 1f, 1f);
-		this.game.getBatch().draw(this.collisionText, this.collisionRectStairs.x, this.collisionRectStairs.y, 
-				this.collisionRectStairs.getWidth(), this.collisionRectStairs.getHeight());
-		this.getGame().getBatch().setColor(1f, 0f, 0f, 1f);
-		this.game.getBatch().draw(this.collisionText,
-								  this.collisionRectJumpRight.x,
-												this.collisionRectJumpRight.y, 
-						this.collisionRectJumpRight.getWidth(), this.collisionRectJumpRight.getHeight());
-		this.getGame().getBatch().setColor(1f, 0f, 0f, 1f);
-		this.game.getBatch().draw(this.collisionText,
-								  this.collisionRectJumpLeft.x,
-												this.collisionRectJumpLeft.y, 
-						this.collisionRectJumpLeft.getWidth(), this.collisionRectJumpLeft.getHeight());*/
 		this.getGame().getBatch().setColor(1f, 1f, 1f, 1f);
 		this.state.Draw(delta);		
 	}

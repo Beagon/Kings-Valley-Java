@@ -156,18 +156,6 @@ public class ExplorerInputProcessor implements InputProcessor
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button)
 	{
-		/*
-		int x_right = 1200;
-		int x_left = 0;
-		int y = 620;
-		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
-		{
-			this.explorer.setState(this.explorer.getWalkRight());
-		}		
-		else if ( screenX > x_left  && screenX < x_left + 100  && screenY > y && screenY < y + 100)
-		{
-			this.explorer.setState(this.explorer.getWalkLeft());
-		}*/
 		return false;
 	}
 

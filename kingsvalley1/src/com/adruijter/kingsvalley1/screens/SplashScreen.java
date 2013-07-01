@@ -26,12 +26,11 @@ public class SplashScreen implements Screen
 	private boolean showImage1985Konami = false, showImagePlayStart = false,
 					showImagePush = false;
 	private float timerPlayStart;
+	private OrthographicCamera cam;
 	
 	public float getRatio() {
 		return ratio;
 	}
-	
-	private OrthographicCamera cam;
 	
 	//Constructor
 	public SplashScreen(KingsValley1 game) 

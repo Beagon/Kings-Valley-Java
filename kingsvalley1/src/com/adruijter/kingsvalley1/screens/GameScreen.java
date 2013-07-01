@@ -17,6 +17,8 @@ public class GameScreen implements Screen {
 	private float ratio, yzoom = 480f;
 	private FPSLogger logger;
 	private int levelIndex;
+	private OrthographicCamera cam;
+	
 	
 	public float getRatio() {
 		return ratio;
@@ -27,8 +29,6 @@ public class GameScreen implements Screen {
 	public void setLevel(Level level) {
 		this.level = level;
 	}
-
-	private OrthographicCamera cam;
 	
 	//Constructor
 	public GameScreen(KingsValley1 game) 
@@ -42,10 +42,7 @@ public class GameScreen implements Screen {
 		cam.position.set(544f/2f, 480f/2f, 0);
 		this.game.getBatch().setColor(1f, 1f, 1f, 1f);		
 		cam.update();
-		
-		
 	}
-
 	
 	@Override
 	public void render(float delta)

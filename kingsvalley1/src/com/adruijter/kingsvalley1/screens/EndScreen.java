@@ -1,10 +1,7 @@
 package com.adruijter.kingsvalley1.screens;
 
-import java.io.IOException;
-
 import com.adruijter.kingsvalley1.KingsValley1;
 import com.adruijter.kingsvalley1.brick.Image;
-import com.adruijter.kingsvalley1.level.Level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,12 +20,12 @@ public class EndScreen implements Screen {
 	private float timer;
 	private boolean  showImagePlayStart = false,
 					 showImagePush = false;
+	private OrthographicCamera cam;
 	
 	public float getRatio() {
 		return ratio;
 	}
-	
-	private OrthographicCamera cam;
+
 	
 	//Constructor
 	public EndScreen(KingsValley1 game) 

@@ -3,7 +3,6 @@ package com.adruijter.kingsvalley1;
 import com.adruijter.kingsvalley1.screens.EndScreen;
 import com.adruijter.kingsvalley1.screens.GameScreen;
 import com.adruijter.kingsvalley1.screens.SplashScreen;
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

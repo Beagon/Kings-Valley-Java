@@ -8,15 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 public class Time
 {
 	private static int gameTime = 300;
-/*	private static boolean isOn = true;
-
-	public static boolean isOn() {
-		return isOn;
-	}
-
-	public static void setOn(boolean isOn) {
-		Time.isOn = isOn;
-	}*/
 
 	public static int getGameTime() {
 		return gameTime;

@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ExplorerJumpIdleLeft extends AnimatedSprite
 {
-
 	 //Fields
     private Explorer explorer;
     private float startX, startY, a, x;

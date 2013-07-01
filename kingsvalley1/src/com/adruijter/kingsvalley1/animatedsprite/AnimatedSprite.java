@@ -1,14 +1,11 @@
 package com.adruijter.kingsvalley1.animatedsprite;
 
 import com.adruijter.kingsvalley1.explorer.Explorer;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AnimatedSprite
 {
 	//Fields
     protected Explorer explorer;
-    private int[] xValue = { 0, 18, 36, 54, 72, 90, 108, 126 };
     protected int i = 0;
     private float timer = 0;
     protected boolean effect = false;
@@ -37,18 +34,6 @@ public class AnimatedSprite
     //Draw
     public void Draw(float delta)
     {
-    	/*
-    	this.explorer.getGame().getBatch().draw(this.explorer.getTexture(),
-								    			(int)this.explorer.getPosition().x,
-								   				(int)this.explorer.getPosition().y,
-								   				18f,
-								   				32f,
-								   				this.xValue[this.i],
-                                   				0,
-                                   				18,
-                                   				32,
-                                   				this.effect,
-                                   				true);*/
     	
     	if (this.effect)
     	{

@@ -89,15 +89,6 @@ public class ExplorerStartIdle extends AnimatedSprite
 			this.explorer.getGame().getGameScreen().getLevel().getMasterMelody().setVolume(0.6f);
 			this.explorer.getGame().getGameScreen().getLevel().getMasterMelody().setLooping(true);
 		}
-		
-		/*
-		this.explorer.setPosition(this.explorer.getPosition().add(-1f, 0.5f));
-		if (ExplorerManager.CollisionDetectionStartWalkDownStairs())
-		{
-			this.explorer.setPosition(this.explorer.getPosition().add(0f, this.explorer.getPixelsThroughFloor()));
-			
-		}*/
-		//super.Update(delta);
 	}
 	
 	public void Draw(float delta)
